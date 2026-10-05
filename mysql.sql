@@ -1,17 +1,15 @@
-create SCHEMA `Ejercicios_BDD`;
+CREATE SCHEMA IF NOT EXISTS ejercicios_bdd;
 
 USE ejercicios_bdd;
 
-create table estudiantes(
-	id_estudiante int primary key,
-	nombres varchar(50),
-	apellido varchar(50),
-	edad int,
-	curso varchar(50),
-	fecha_registro varchar(10)
+CREATE TABLE estudiantes(
+	id_estudiante INT PRIMARY KEY,
+	nombres VARCHAR(50),
+	apellido VARCHAR(50),
+	edad INT,
+	curso VARCHAR(50),
+	fecha_registro VARCHAR(10)
 );
-
-select * from estudiantes;
 
 INSERT INTO estudiantes (
     id_estudiante,
@@ -30,7 +28,13 @@ INSERT INTO estudiantes (
 (7, 'Ana', 'Martínez', 20, 'Arquitectura de Software', '2026-01-12'),
 (8, 'Diego', 'Ramírez', 27, 'Base de datos', '2026-01-15'),
 (9, 'Valeria', 'Morales', 22, 'Redes de Computadoras', '2026-01-18'),
-(10, 'Gabriel', 'Castillo', 24, 'Inteligencia Artificial', '2026-01-20');
+(10, 'Gabriel', 'Castillo', 24, 'Inteligencia Artificial', '2026-01-20'),
+(11, 'Anthony', 'Herrera', 26, 'Programacion', '2026-02-10'),
+(12, 'María', 'López', 24, 'Base de datos', '2026-03-15'),
+(13, 'Pedro', 'Sánchez', 19, 'Programacion', '2026-03-15'),
+(14, 'Laura', 'Gómez', 28, 'Programacion', '2026-01-25'),
+(15, 'Esteban', 'Quito', 22, 'Base de datos', '2026-04-05');
+
 
 -- mostrar todos
 select * from estudiantes;
@@ -38,11 +42,11 @@ select * from estudiantes;
 -- mostrar nombre y cursos
 select nombres,curso from estudiantes;
 
--- mostrar mayores de 18 y 25 anios
+-- mostrar mayores de 18
 select * from estudiantes 
-where edad > 18 and edad <= 25;
+where edad > 18;
 
--- mosrtrar estudiantes entre 18 y 25(incluye 18 y 25)
+-- mosrtrar estudiantes entre 18 y 25 (incluye 18 y 25)
 select * from estudiantes 
 where edad between 18 and 25;
 
@@ -58,7 +62,7 @@ where fecha_registro > '2026-03-01';
 select * from estudiantes
 where fecha_registro between '2026-01-01' and '2026-04-30';
 
--- UPDATES
+-- UPDATES (Se completa el quinto UPDATE para cambiar varios campos a la vez)
 update estudiantes set curso = 'Inteligencia Artificial'
 where id_estudiante = 1;
 
@@ -71,8 +75,10 @@ where id_estudiante = 2;
 update estudiantes set nombres = 'Micaela', apellido = 'Haro'
 where id_estudiante = 2;
 
--- DELETES
+update estudiantes set curso = 'Sistemas Operativos', edad = 25
+where id_estudiante = 3;
 
+-- DELETES
 delete from estudiantes 
 where id_estudiante = 8;
 
@@ -87,3 +93,26 @@ where fecha_registro = '2026-01-02';
 
 delete from estudiantes 
 where id_estudiante = 10;
+
+--  Modificación de la Tabla 
+ALTER TABLE estudiantes ADD COLUMN correo VARCHAR(100);
+
+-- Actualización de Scripts
+INSERT INTO estudiantes (id_estudiante, nombres, apellido, edad, curso, fecha_registro, correo) VALUES
+(16, 'Juan', 'Perez', 20, 'Programacion', '2026-01-10', 'juan@gmail.com');
+
+--  Consultas con Fechas requeridas
+--  Mostrar estudiantes registrados después de 2026-02-01
+SELECT * FROM estudiantes WHERE fecha_registro > '2026-02-01';
+
+--  Mostrar estudiantes registrados antes de 2026-05-01
+SELECT * FROM estudiantes WHERE fecha_registro < '2026-05-01';
+
+-- Mostrar estudiantes registrados entre dos fechas
+SELECT * FROM estudiantes WHERE fecha_registro BETWEEN '2026-02-01' AND '2026-04-01';
+
+--  Mostrar estudiantes registrados exactamente en 2026-03-15
+SELECT * FROM estudiantes WHERE fecha_registro = '2026-03-15';
+
+-- Mostrar estudiantes del curso Programacion registrados después de 2026-01-01
+SELECT * FROM estudiantes WHERE curso = 'Programacion' AND fecha_registro > '2026-01-01';
